@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AddColorCharacterModifier : BaseCharacterModifier
+public class AddColorVertexModifier : BaseVertexModifier
 {
     [SerializeField]
     private AnimationCurve curve;
@@ -9,7 +9,7 @@ public class AddColorCharacterModifier : BaseCharacterModifier
 
     public override void Apply(float progress, ref UIVertex uiVertex)
     {
-        Color color1 = curve.Evaluate(progress) * color;
-        uiVertex.color = color1;
+        uiVertex.color = curve.Evaluate(progress) * color;
     }
+
 }

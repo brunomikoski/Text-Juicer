@@ -5,25 +5,33 @@ using UnityEngine;
 public struct CharacterController
 {
     private float progress;
-    public float Progress { get { return progress; } }
-    private float perCharacterAnimationDelay;
-    private float animationTime;
 
+    public float Progress
+    {
+        get { return progress; }
+    }
 
-    public CharacterController(float targetAnimationTime, float targetPerCharacterAnimationDelay)
+    private float startingTime;
+
+    private float internalTime;
+    private float finalTime;
+    private float totalAnimationTime;
+
+    public CharacterController(float startTime, float targetAnimationTime)
     {
         progress = 0.0f;
-        animationTime = targetAnimationTime;
-        perCharacterAnimationDelay = targetPerCharacterAnimationDelay;
+        startingTime = startTime;
+        finalTime = startingTime + targetAnimationTime;
+        totalAnimationTime = finalTime - startTime;
+        internalTime = 0;
     }
 
     public void UpdateTime(float time)
     {
-        if (time < perCharacterAnimationDelay)
+        if (time < startingTime)
             return;
 
-        progress = Mathf.Clamp((time - perCharacterAnimationDelay)/animationTime, 0.0f, 1.0f);
-        //Debug.Log("Progress "+progress);
 
+        progress = Mathf.Clamp((time - startingTime)/totalAnimationTime, 0.0f, 1.0f);
     }
 }

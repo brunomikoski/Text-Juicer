@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class TextAnimator : BaseMeshEffect
 {
     [SerializeField]
@@ -10,21 +9,22 @@ public class TextAnimator : BaseMeshEffect
     [SerializeField]
     private float perCharacterAnimationDelay = 0.01f;
 
-    [SerializeField]
-    private bool animate;
-
-    [SerializeField, Range(0.0f,1.0f)]
+    [SerializeField, Range(0.0f, 1.0f)]
     private float progress;
 
-    private float animationTime = 0;
-    private bool isAnimating;
-    private Text textComponent;
     private CharacterController[] characterControllers;
-    private BaseCharacterModifier[] characterModifiers;
+    private float internalTime;
+    private bool isDirty;
+    private float lastInternalTime;
+    private float realTotalAnimationTime;
+
+    private Text textComponent;
+    private BaseVertexModifier[] vertexModifiers;
+    private bool isPlaying;
 
     protected override void OnValidate()
     {
-        textComponent = GetComponent<Text>();
+        isDirty = true;
         base.OnValidate();
     }
 
@@ -43,13 +43,11 @@ public class TextAnimator : BaseMeshEffect
                 UIVertex uiVertex = new UIVertex();
                 vh.PopulateUIVertex(ref uiVertex, i + j);
 
-                if (isAnimating)
+                if (characterControllers != null && characterControllers.Length == textComponent.text.Length)
                 {
                     CharacterController characterController = characterControllers[characterCount];
                     ModifyVertex(characterController, ref uiVertex);
                 }
-
-                //uiVertex.position.y += curveForText.Evaluate(rectTrans.rect.width * rectTrans.pivot.x + uiVertex.position.x) * curveMultiplier;
                 vh.SetUIVertex(uiVertex, i + j);
             }
             characterCount += 1;
@@ -58,46 +56,83 @@ public class TextAnimator : BaseMeshEffect
 
     private void ModifyVertex(CharacterController characterController, ref UIVertex uiVertex)
     {
-        for (int i = 0; i < characterModifiers.Length; i++)
+        for (int i = 0; i < vertexModifiers.Length; i++)
         {
-            BaseCharacterModifier baseCharacterModifier = characterModifiers[i];
-            baseCharacterModifier.Apply(characterController.Progress, ref uiVertex);
+            BaseVertexModifier baseVertexModifier = vertexModifiers[i];
+            baseVertexModifier.Apply(characterController.Progress, ref uiVertex);
         }
+    }
+
+    public void Restart()
+    {
+        internalTime = 0;
+    }
+    public void Play()
+    {
+        isPlaying = true;
+    }
+
+    public void Stop()
+    {
+        isPlaying = false;
     }
 
     private void Update()
     {
-        if (animate)
+        ValidateComponents();
+        UpdateTime();
+        CheckAnimation();
+    }
+
+    private void CheckAnimation()
+    {
+        if (isPlaying)
         {
-            animate = false;
-            animationTime = 0;
+            internalTime += Time.deltaTime;
 
-            characterControllers = new CharacterController[textComponent.text.Length];
-
-            for (int i = 0; i < textComponent.text.Length; i++)
-                characterControllers[i] = new CharacterController(perCharacterAnimationTime, perCharacterAnimationDelay*i);
-
-            characterModifiers = GetComponents<BaseCharacterModifier>();
-
-            isAnimating = true;
-
+            if(internalTime >= realTotalAnimationTime)
+                Stop();
         }
+    }
 
-        if (isAnimating)
+    private void UpdateTime()
+    {
+        if(!isPlaying)
+            internalTime = progress*realTotalAnimationTime;
+
+        for (int i = 0; i < characterControllers.Length; i++)
+            characterControllers[i].UpdateTime(internalTime);
+
+        if (internalTime != lastInternalTime)
         {
-            animationTime += Time.deltaTime;
+            lastInternalTime = internalTime;
+            graphic.SetAllDirty();
+        }
+    }
 
-            float lastProgress = 0;
-            for (int i = 0; i < characterControllers.Length; i++)
+    private void ValidateComponents()
+    {
+        if (isDirty)
+        {
+            textComponent = GetComponent<Text>();
+            vertexModifiers = GetComponents<BaseVertexModifier>();
+
+
+            int charCount = textComponent.text.Length;
+            characterControllers = new CharacterController[charCount];
+
+
+            realTotalAnimationTime = perCharacterAnimationTime +
+                                     (charCount*perCharacterAnimationDelay);
+
+
+            for (int i = 0; i < charCount; i++)
             {
-                characterControllers[i].UpdateTime(animationTime);
-                lastProgress = characterControllers[i].Progress;
+                characterControllers[i] = new CharacterController(perCharacterAnimationDelay*i,
+                    perCharacterAnimationTime);
             }
 
-            graphic.SetAllDirty();
-
-            if (lastProgress >= 1.0f)
-                isAnimating = false;
+            isDirty = false;
         }
     }
 }
