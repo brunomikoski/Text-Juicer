@@ -88,17 +88,29 @@ public class TextAnimator : BaseMeshEffect
     {
         if (isPlaying)
         {
-            internalTime += Time.deltaTime;
-
-            if(internalTime >= realTotalAnimationTime)
+            if (internalTime + Time.deltaTime <= realTotalAnimationTime)
+            {
+                internalTime += Time.deltaTime;
+            }
+            else
+            {
+                internalTime = realTotalAnimationTime;
+                progress = 1.0f;
                 Stop();
+            }
         }
     }
 
     private void UpdateTime()
     {
-        if(!isPlaying)
+        if (!isPlaying)
+        {
             internalTime = progress*realTotalAnimationTime;
+        }
+        else
+        {
+            progress = internalTime / realTotalAnimationTime;
+        }
 
         for (int i = 0; i < characterControllers.Length; i++)
             characterControllers[i].UpdateTime(internalTime);
