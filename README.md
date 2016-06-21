@@ -1,5 +1,5 @@
 # TextAnimation
-Simple text animation controller for Unity Text 
+Simple text animation controller for Unity Text, feel free to create PR for new effects and using on your project! 
 
 
 
