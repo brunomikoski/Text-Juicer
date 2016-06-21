@@ -8,13 +8,16 @@ namespace TextAnimation
     public class TextAnimator : BaseMeshEffect
     {
         [SerializeField]
-        private float perCharacterAnimationTime = 1.0f;
+        private float duration = 1.0f;
 
         [SerializeField]
-        private float perCharacterAnimationDelay = 0.01f;
+        private float delay = 0.01f;
 
         [SerializeField, Range(0.0f, 1.0f)]
         private float progress;
+
+        [SerializeField]
+        private bool playOnEnable = true;
 
         private CharController[] charControllers;
         private float internalTime;
@@ -30,6 +33,14 @@ namespace TextAnimation
         {
             SetDirty();
             base.OnValidate();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            SetDirty();
+            if (Application.isPlaying && playOnEnable)
+                Play();
         }
 
         public override void ModifyMesh(VertexHelper vh)
@@ -156,14 +167,14 @@ namespace TextAnimation
                 charControllers = new CharController[charCount];
 
 
-                realTotalAnimationTime = perCharacterAnimationTime +
-                                         (charCount*perCharacterAnimationDelay);
+                realTotalAnimationTime = duration +
+                                         (charCount*delay);
 
 
                 for (int i = 0; i < charCount; i++)
                 {
-                    charControllers[i] = new CharController(perCharacterAnimationDelay*i,
-                        perCharacterAnimationTime, i);
+                    charControllers[i] = new CharController(delay*i,
+                        duration, i);
                 }
 
                 isDirty = false;

@@ -13,8 +13,6 @@ namespace TextAnimation
 
         private float startingTime;
 
-        private float internalTime;
-        private float finalTime;
         private float totalAnimationTime;
         private int order;
 
@@ -27,9 +25,7 @@ namespace TextAnimation
         {
             progress = 0.0f;
             startingTime = startTime;
-            finalTime = startingTime + targetAnimationTime;
-            totalAnimationTime = finalTime - startTime;
-            internalTime = 0;
+            totalAnimationTime = (startingTime + targetAnimationTime) - startTime;
             order = targetOrder;
         }
 
