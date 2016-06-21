@@ -84,8 +84,11 @@ namespace TextAnimation
         {
             internalTime = 0;
         }
-        public void Play()
+        public void Play(bool fromBeginning = true)
         {
+            if(fromBeginning)
+                Restart();
+
             isPlaying = true;
         }
 
