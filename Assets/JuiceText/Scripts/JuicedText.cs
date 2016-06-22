@@ -1,11 +1,12 @@
-using TextAnimation.Effects;
+using BrunoMikoski.TextJuicer.Effects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace TextAnimation
+namespace BrunoMikoski.TextJuicer
 {
     [RequireComponent(typeof(Text))]
-    public class TextAnimator : BaseMeshEffect
+    [AddComponentMenu("UI/Text Juicer/Juiced Text")]
+    public class JuicedText : BaseMeshEffect
     {
         [SerializeField]
         private float duration = 1.0f;
@@ -26,7 +27,7 @@ namespace TextAnimation
         private float realTotalAnimationTime;
 
         private Text textComponent;
-        private BaseVertexModifier[] vertexModifiers;
+        private VertexModifier[] vertexModifiers;
         private bool isPlaying;
 
         protected override void OnValidate()
@@ -80,8 +81,8 @@ namespace TextAnimation
         {
             for (int i = 0; i < vertexModifiers.Length; i++)
             {
-                BaseVertexModifier baseVertexModifier = vertexModifiers[i];
-                baseVertexModifier.Apply(charController, ref uiVertex);
+                VertexModifier vertexModifier = vertexModifiers[i];
+                vertexModifier.Apply(charController, ref uiVertex);
             }
         }
 
@@ -160,7 +161,7 @@ namespace TextAnimation
             if (isDirty)
             {
                 textComponent = GetComponent<Text>();
-                vertexModifiers = GetComponents<BaseVertexModifier>();
+                vertexModifiers = GetComponents<VertexModifier>();
 
 
                 int charCount = textComponent.text.Length;

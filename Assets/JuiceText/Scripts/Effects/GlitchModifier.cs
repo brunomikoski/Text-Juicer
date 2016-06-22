@@ -1,13 +1,10 @@
-using System;
 using UnityEngine;
-using System.Collections;
-using TextAnimation;
-using TextAnimation.Effects;
 using Random = UnityEngine.Random;
 
-namespace TextAnimation.Effects
+namespace BrunoMikoski.TextJuicer.Effects
 {
-    public class NoisyVertexModifier : BaseVertexModifier
+    [AddComponentMenu("UI/Text Juicer/Effects/Glitch")]
+    public class GlitchModifier : VertexModifier
     {
         [SerializeField]
         private AnimationCurve forceCurve;

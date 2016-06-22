@@ -1,12 +1,13 @@
 using UnityEngine;
 
-namespace TextAnimation.Effects
+namespace BrunoMikoski.TextJuicer.Effects
 {
     /// <summary>
     ///     Based on this file
     ///     https://bitbucket.org/ddreaper/unity-ui-extensions/src/2689f3d6ce7d41fe9caaa3025c9f1ebfe65b4a7f/Scripts/Effects/CylinderText.cs
     /// </summary>
-    public class CylinderVertexModifier : BaseVertexModifier
+    [AddComponentMenu("UI/Text Juicer/Effects/Cylinder")]
+    public class CylinderModifier : VertexModifier
     {
         [SerializeField]
         private float radius = 10;

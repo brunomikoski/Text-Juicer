@@ -1,8 +1,9 @@
 using UnityEngine;
 
-namespace TextAnimation.Effects
+namespace BrunoMikoski.TextJuicer.Effects
 {
-    public class YVertexModifier : BaseVertexModifier
+    [AddComponentMenu("UI/Text Juicer/Effects/Y")]
+    public class YModifier : VertexModifier
     {
         [SerializeField]
         private AnimationCurve curve = new AnimationCurve(new Keyframe(0,1));

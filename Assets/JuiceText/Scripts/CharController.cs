@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TextAnimation
+namespace BrunoMikoski.TextJuicer
 {
     public struct CharController
     {
