@@ -1,7 +1,15 @@
-# TextAnimation
-Simple text animation controller for Unity Text, feel free to create PR for new effects and using on your project! 
+# Text Juice
+Is a plugin to allow you do "per-character-animation" on text fields, like this one:
+![](https://thumbs.gfycat.com/UntimelyDazzlingBrahmancow-size_restricted.gif)
 
+[EXAMPLES](https://gfycat.com/BlandScholarlyDragonfly)
 
+###### Controlling the animation
+This git is a ready to be used as sub-module, so just add to your project anywhere inside the Assets Folder, something like Assets/Text Juicer/
+
+If you don't know how to add as a sub-module you can check this [guide](https://blog.sourcetreeapp.com/2012/02/01/using-submodules-and-subrepositories/)
+
+Or you can just download the [Unity Package](../master/Text%20Juicer%200.0.1.unitypackage.meta)
 
 ###### Controlling the animation
 Basically you can access and change the progress of the animation by the animator itself, or using the helpers inside the TextAnimation, by simply caling, `Play()`, `Stop()` and `Restart()`
@@ -26,22 +34,23 @@ namespace TextAnimation.Effects
     }
 }
 ```
-The result will be something like that:
 
-![](https://thumbs.gfycat.com/UntimelyDazzlingBrahmancow-size_restricted.gif)
 
 ###### Multiple Effects
 You can add multiple effects at same time, like the PerCharacter and the X Modifier
 ![](https://thumbs.gfycat.com/BestGrayCusimanse-size_restricted.gif)
 
-Right now this is the modifiers I come up with:
+Current Effects:
 - X 
-![](https://thumbs.gfycat.com/TautHarmfulElver-size_restricted.gif) 
 - Y 
-![](https://thumbs.gfycat.com/ClosedKlutzyCardinal-size_restricted.gif)
-- Per Character Color Modifier
+- Color Modifier
 - Cylinder
 - Scale Vertex Modifier
+- Glitch
+
+
+You can check effects accessing this link:
+
 
 
 
