@@ -8,6 +8,8 @@ namespace BrunoMikoski.TextJuicer
     [AddComponentMenu("UI/Text Juicer/Juiced Text")]
     public class JuicedText : BaseMeshEffect
     {
+        public const string VERSION = "0.0.1";
+
         [SerializeField]
         private float duration = 1.0f;
 
