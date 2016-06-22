@@ -14,6 +14,6 @@ namespace BrunoMikoski.TextJuicer.Effects
 
             juicedText.SetDirty();
         }
-        public abstract void Apply(CharController charController, ref UIVertex uiVertex);
+        public abstract void Apply(CharacterData characterData, ref UIVertex uiVertex);
     }
 }

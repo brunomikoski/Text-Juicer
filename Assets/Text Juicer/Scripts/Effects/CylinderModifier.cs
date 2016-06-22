@@ -13,11 +13,11 @@ namespace BrunoMikoski.TextJuicer.Effects
         private float radius = 10;
 
 
-        public override void Apply(CharController charController, ref UIVertex uiVertex)
+        public override void Apply(CharacterData characterData, ref UIVertex uiVertex)
         {
             float x = uiVertex.position.x;
 
-            float finalRadius = Mathf.Clamp(radius*charController.Progress, 1, radius);
+            float finalRadius = Mathf.Clamp(radius*characterData.Progress, 1, radius);
             uiVertex.position.z = -finalRadius*Mathf.Cos(x/finalRadius);
             uiVertex.position.x = finalRadius*Mathf.Sin(x/finalRadius);
         }

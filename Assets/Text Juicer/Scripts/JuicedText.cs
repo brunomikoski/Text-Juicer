@@ -20,7 +20,7 @@ namespace BrunoMikoski.TextJuicer
         [SerializeField]
         private bool playOnEnable = true;
 
-        private CharController[] charControllers;
+        private CharacterData[] charactersData;
         private float internalTime;
         private bool isDirty;
         private float lastInternalTime;
@@ -56,19 +56,19 @@ namespace BrunoMikoski.TextJuicer
             int characterCount = 0;
             for (int i = 0; i < count; i += 4)
             {
-                if (characterCount >= charControllers.Length)
+                if (characterCount >= charactersData.Length)
                 {
                     SetDirty();
                     return;
                 }
 
-                CharController charController = charControllers[characterCount];
+                CharacterData characterData = charactersData[characterCount];
                 for (int j = 0; j < 4; j++)
                 {
                     UIVertex uiVertex = new UIVertex();
                     vh.PopulateUIVertex(ref uiVertex, i + j);
 
-                    ModifyVertex(charController, ref uiVertex);
+                    ModifyVertex(characterData, ref uiVertex);
 
                     vh.SetUIVertex(uiVertex, i + j);
                 }
@@ -77,12 +77,12 @@ namespace BrunoMikoski.TextJuicer
         }
 
 
-        private void ModifyVertex(CharController charController, ref UIVertex uiVertex)
+        private void ModifyVertex(CharacterData characterData, ref UIVertex uiVertex)
         {
             for (int i = 0; i < vertexModifiers.Length; i++)
             {
                 VertexModifier vertexModifier = vertexModifiers[i];
-                vertexModifier.Apply(charController, ref uiVertex);
+                vertexModifier.Apply(characterData, ref uiVertex);
             }
         }
 
@@ -146,8 +146,8 @@ namespace BrunoMikoski.TextJuicer
 
             
 
-            for (int i = 0; i < charControllers.Length; i++)
-                charControllers[i].UpdateTime(internalTime);
+            for (int i = 0; i < charactersData.Length; i++)
+                charactersData[i].UpdateTime(internalTime);
 
             if (internalTime != lastInternalTime)
             {
@@ -165,7 +165,7 @@ namespace BrunoMikoski.TextJuicer
 
 
                 int charCount = textComponent.text.Length;
-                charControllers = new CharController[charCount];
+                charactersData = new CharacterData[charCount];
 
 
                 realTotalAnimationTime = duration +
@@ -174,7 +174,7 @@ namespace BrunoMikoski.TextJuicer
 
                 for (int i = 0; i < charCount; i++)
                 {
-                    charControllers[i] = new CharController(delay*i,
+                    charactersData[i] = new CharacterData(delay*i,
                         duration, i);
                 }
 

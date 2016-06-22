@@ -11,9 +11,9 @@ namespace BrunoMikoski.TextJuicer.Effects
         [SerializeField]
         private float rangeAmount = 10;
 
-        public override void Apply(CharController charController, ref UIVertex uiVertex)
+        public override void Apply(CharacterData characterData, ref UIVertex uiVertex)
         {
-            float parsedAmount = rangeAmount * forceCurve.Evaluate(charController.Progress);
+            float parsedAmount = rangeAmount * forceCurve.Evaluate(characterData.Progress);
             uiVertex.position.x = uiVertex.position.x + Random.Range(-parsedAmount, parsedAmount);
         }
     }

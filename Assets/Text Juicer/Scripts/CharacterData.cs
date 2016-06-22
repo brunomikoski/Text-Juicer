@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BrunoMikoski.TextJuicer
 {
-    public struct CharController
+    public struct CharacterData
     {
         private float progress;
 
@@ -21,7 +21,7 @@ namespace BrunoMikoski.TextJuicer
             get { return order; }
         }
 
-        public CharController(float startTime, float targetAnimationTime, int targetOrder)
+        public CharacterData(float startTime, float targetAnimationTime, int targetOrder)
         {
             progress = 0.0f;
             startingTime = startTime;
