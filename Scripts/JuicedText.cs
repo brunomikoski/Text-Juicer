@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BrunoMikoski.TextJuicer
 {
-    [RequireComponent(typeof(Text))]
+    [RequireComponent(typeof (Text))]
     [AddComponentMenu("UI/Text Juicer/Juiced Text")]
     public class JuicedText : BaseMeshEffect
     {
@@ -50,16 +50,17 @@ namespace BrunoMikoski.TextJuicer
         {
             int count = vh.currentVertCount;
             if (!IsActive() || count == 0 || isDirty)
+            {
+                vh.Clear();
                 return;
-
-            if(isDirty)
-                return;
+            }
 
             int characterCount = 0;
             for (int i = 0; i < count; i += 4)
             {
                 if (characterCount >= charactersData.Length)
                 {
+                    vh.Clear();
                     SetDirty();
                     return;
                 }
@@ -78,7 +79,6 @@ namespace BrunoMikoski.TextJuicer
             }
         }
 
-
         private void ModifyVertex(CharacterData characterData, ref UIVertex uiVertex)
         {
             for (int i = 0; i < vertexModifiers.Length; i++)
@@ -90,17 +90,19 @@ namespace BrunoMikoski.TextJuicer
 
         public void Complete()
         {
-            if(isPlaying)
+            if (isPlaying)
                 progress = 1.0f;
         }
 
         public void Restart()
         {
             internalTime = 0;
+            SetDirty();
         }
+
         public void Play(bool fromBeginning = true)
         {
-            if(fromBeginning)
+            if (fromBeginning)
                 Restart();
 
             isPlaying = true;
@@ -143,10 +145,8 @@ namespace BrunoMikoski.TextJuicer
             }
             else
             {
-                progress = internalTime / realTotalAnimationTime;
+                progress = internalTime/realTotalAnimationTime;
             }
-
-            
 
             for (int i = 0; i < charactersData.Length; i++)
                 charactersData[i].UpdateTime(internalTime);
@@ -165,14 +165,11 @@ namespace BrunoMikoski.TextJuicer
                 textComponent = GetComponent<Text>();
                 vertexModifiers = GetComponents<VertexModifier>();
 
-
                 int charCount = textComponent.text.Length;
                 charactersData = new CharacterData[charCount];
 
-
                 realTotalAnimationTime = duration +
                                          (charCount*delay);
-
 
                 for (int i = 0; i < charCount; i++)
                 {
