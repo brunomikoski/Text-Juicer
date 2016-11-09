@@ -4,23 +4,24 @@ using UnityEngine.UI;
 
 namespace BrunoMikoski.TextJuicer
 {
-    [RequireComponent(typeof(Text))]
+    [RequireComponent(typeof (Text))]
     [AddComponentMenu("UI/Text Juicer/Juiced Text")]
     public class JuicedText : BaseMeshEffect
     {
-        public const string VERSION = "0.0.1";
+        public const string VERSION = "0.0.2";
 
         [SerializeField]
         private float duration = 1.0f;
-
         [SerializeField]
         private float delay = 0.01f;
-
         [SerializeField, Range(0.0f, 1.0f)]
         private float progress;
-
         [SerializeField]
         private bool playOnEnable = true;
+        [SerializeField]
+        private bool loop = false;
+        [SerializeField]
+        private bool playForever = false;
 
         private CharacterData[] charactersData;
         private float internalTime;
@@ -126,15 +127,22 @@ namespace BrunoMikoski.TextJuicer
         {
             if (isPlaying)
             {
-                if (internalTime + Time.deltaTime <= realTotalAnimationTime)
+                if (internalTime + Time.deltaTime <= realTotalAnimationTime || playForever)
                 {
                     internalTime += Time.deltaTime;
                 }
                 else
                 {
-                    internalTime = realTotalAnimationTime;
-                    progress = 1.0f;
-                    Stop();
+                    if (loop)
+                    {
+                        internalTime = 0;
+                    }
+                    else
+                    {
+                        internalTime = realTotalAnimationTime;
+                        progress = 1.0f;
+                        Stop();
+                    }
                 }
             }
         }

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace BrunoMikoski.TextJuicer
 {
     public struct CharacterData
@@ -34,8 +32,7 @@ namespace BrunoMikoski.TextJuicer
             if (time < startingTime)
                 return;
 
-
-            progress = Mathf.Clamp((time - startingTime)/totalAnimationTime, 0.0f, 1.0f);
+            progress = (time - startingTime) / totalAnimationTime;
         }
     }
 }
