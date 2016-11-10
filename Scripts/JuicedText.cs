@@ -195,5 +195,11 @@ namespace BrunoMikoski.TextJuicer
         {
             isDirty = true;
         }
+
+        public void SetProgress(float targetProgress)
+        {
+            progress = targetProgress;
+            internalTime = progress * realTotalAnimationTime;
+        }
     }
 }
