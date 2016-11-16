@@ -198,6 +198,8 @@ namespace BrunoMikoski.TextJuicer
 
         public void SetProgress(float targetProgress)
         {
+            SetDirty();
+            UpdateComponents();
             progress = targetProgress;
             internalTime = progress * realTotalAnimationTime;
         }
