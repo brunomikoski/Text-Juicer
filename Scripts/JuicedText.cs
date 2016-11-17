@@ -203,5 +203,10 @@ namespace BrunoMikoski.TextJuicer
             progress = targetProgress;
             internalTime = progress * realTotalAnimationTime;
         }
+
+        public void SetPlayForever(bool shouldPlayForever)
+        {
+            playForever = shouldPlayForever;
+        }
     }
 }
