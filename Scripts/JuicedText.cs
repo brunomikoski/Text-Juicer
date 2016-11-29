@@ -30,6 +30,19 @@ namespace BrunoMikoski.TextJuicer
         private float realTotalAnimationTime;
 
         private Text textComponent;
+        public Text TextComponent
+        {
+            get
+            {
+                if (textComponent == null)
+                {
+                    SetDirty();
+                    UpdateComponents();
+                }
+                return textComponent;
+            }
+        }
+
         private VertexModifier[] vertexModifiers;
         private bool isPlaying;
 
@@ -172,7 +185,8 @@ namespace BrunoMikoski.TextJuicer
         {
             if (isDirty)
             {
-                textComponent = GetComponent<Text>();
+                if(textComponent == null)
+                    textComponent = GetComponent<Text>();
                 vertexModifiers = GetComponents<VertexModifier>();
 
                 int charCount = textComponent.text.Length;
