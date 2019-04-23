@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BrunoMikoski.TextJuicer
 {
-    [RequireComponent(typeof (Text))]
+    [RequireComponent(typeof(Text))]
     [AddComponentMenu("UI/Text Juicer/Juiced Text")]
     public class JuicedText : BaseMeshEffect
     {
@@ -22,7 +22,8 @@ namespace BrunoMikoski.TextJuicer
         private bool loop = false;
         [SerializeField]
         private bool playForever = false;
-
+        [SerializeField]
+        private bool reversed = false;
         private CharacterData[] charactersData;
         private float internalTime;
         private bool isDirty;
@@ -185,7 +186,7 @@ namespace BrunoMikoski.TextJuicer
         {
             if (isDirty)
             {
-                if(textComponent == null)
+                if (textComponent == null)
                     textComponent = GetComponent<Text>();
                 vertexModifiers = GetComponents<VertexModifier>();
 
@@ -195,10 +196,11 @@ namespace BrunoMikoski.TextJuicer
                 realTotalAnimationTime = duration +
                                          (charCount * delay);
 
+
                 for (int i = 0; i < charCount; i++)
                 {
-                    charactersData[i] = new CharacterData(delay * i,
-                        duration, i);
+                    int pos = (reversed) ? (charCount - i - 1) : i;
+                    charactersData[i] = new CharacterData(delay * pos, duration, pos);
                 }
 
                 isDirty = false;
