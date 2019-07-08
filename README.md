@@ -1,4 +1,8 @@
+# New version working with Text Mesh PRO:
+https://github.com/badawe/TMP-Text-Juicer
+
 # Text Juice
+
 Is a plugin to allow you do "per-character-animation" on text fields, like this one:
 ![](https://thumbs.gfycat.com/UntimelyDazzlingBrahmancow-size_restricted.gif)
 
